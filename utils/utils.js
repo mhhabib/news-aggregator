@@ -40,6 +40,7 @@ const client = new ComprehendClient({
 	},
 });
 
+// Topics extraction
 const extractTopics = async (text) => {
 	const params = {
 		LanguageCode: 'en',

@@ -13,6 +13,7 @@ const getExistingNewsIds = (existingNewsFeed) => {
 	return new Set(existingNewsFeed.map((news) => news.feedId));
 };
 
+// Extract topics from the news content
 const getNewsTopics = async (newsContent, newsId) => {
 	if (!newsContent) {
 		console.log(

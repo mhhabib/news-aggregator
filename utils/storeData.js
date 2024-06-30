@@ -3,6 +3,7 @@ const path = require('path');
 const dataPath = path.join(__dirname, '..', 'db', 'newsData.json');
 const filterdataPath = path.join(__dirname, '..', 'db', 'filteredData.json');
 
+// Stores new news data
 const storeAllNews = (newsData) => {
 	const data = JSON.stringify(newsData, null, 2);
 	fs.writeFileSync(dataPath, data, 'utf8');
@@ -11,6 +12,7 @@ const storeAllNews = (newsData) => {
 	);
 };
 
+// Get existing news data to avoid potential data duplication
 const getExistingNewsData = () => {
 	try {
 		if (!fs.existsSync(dataPath)) {
@@ -24,6 +26,8 @@ const getExistingNewsData = () => {
 		return [];
 	}
 };
+
+// Get filter data ensures topics based news
 const getFilteredData = (key) => {
 	let newsData = [];
 	try {
@@ -33,7 +37,6 @@ const getFilteredData = (key) => {
 		console.error('Error reading existing data:', error);
 		return;
 	}
-	console.log('FL: ', newsData);
 	if (newsData.length > 0) {
 		const filteredData = newsData.filter((item) => {
 			return item.newsTopics.some((topic) => topic.topicsType === key);
@@ -50,6 +53,7 @@ const getFilteredData = (key) => {
 		console.log(`No news data is found for this Key: ${key}`);
 	}
 };
+
 module.exports = {
 	storeAllNews,
 	getExistingNewsData,

@@ -4,6 +4,7 @@ const { rssFeeds } = require('../constant/configRSSUrl');
 const { validateUrl } = require('./utils');
 const rssParser = new RSSParser();
 
+//Parse news data helper function
 const fetchRSSFeed = async (url, retries = 5, delay = 1000) => {
 	if (!validateUrl(url)) {
 		console.error(`Invalid URL: ${url}`);
@@ -35,6 +36,7 @@ const fetchRSSFeed = async (url, retries = 5, delay = 1000) => {
 	}
 };
 
+// Parse news data by parsing RSS feed
 const fetchRSSFeeds = async () => {
 	const feedPromises = rssFeeds.map((url) =>
 		fetchRSSFeed(url).catch((error) => ({ url, error }))
