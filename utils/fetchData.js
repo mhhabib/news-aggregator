@@ -36,8 +36,21 @@ const fetchRSSFeed = async (url, retries = 5, delay = 1000) => {
 };
 
 const fetchRSSFeeds = async () => {
-	const feedPromises = rssFeeds.map((url) => fetchRSSFeed(url));
-	return Promise.all(feedPromises);
+	const feedPromises = rssFeeds.map((url) =>
+		fetchRSSFeed(url).catch((error) => ({ url, error }))
+	);
+	const results = await Promise.allSettled(feedPromises);
+	const validFeeds = results
+		.filter((result) => result.status === 'fulfilled')
+		.map((result) => result.value);
+	const failedFeeds = results
+		.filter((result) => result.status === 'rejected')
+		.map((result) => result.reason);
+
+	if (failedFeeds.length) {
+		console.error(`Failed to fetch some RSS feeds:`, failedFeeds);
+	}
+	return validFeeds;
 };
 
 module.exports = fetchRSSFeeds;
