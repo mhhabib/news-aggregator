@@ -16,7 +16,7 @@ The News Aggregator is a Javascript program that aggregates news articles from v
 News Aggregator
 ├── constant
 │   ├── configRSSUrl.js
-│   └── namedEntities.js
+│   └── entityConfig.js
 ├── db
 │   ├── newsData.json
 │   └── filteredData.json
